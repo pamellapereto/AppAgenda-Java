@@ -13,8 +13,8 @@ import model.EnderecoDAO;
 
 public class Main {
     public static void main(String[] args) {
-        inputLista();
-        //inputContato();
+        //inputLista();
+        inputContato();
         //inputReuniao();
     }
 
@@ -29,17 +29,10 @@ public class Main {
         System.out.println("-----NOVA LISTA-----");
         System.out.println("Nome: ");
         String nome = scanner.nextLine().trim();
-
-        /*INSERT INTO foo (auto,text)VALUES(NULL,'text');
-        # generate ID by inserting NULLINSERT INTO foo2 (id,text)
-        VALUES(LAST_INSERT_ID(),'text');  # use ID in second table*/
-
-        //Validar o campo para verificar se ele está vazio.
-        if(nome.isEmpty()) {
+        //Validar o campo para verificar se ele está vazio
+        if (nome.isEmpty()) {
             System.out.println("Campo nome obrigatório");
-        }
-
-        else {
+        } else {
             Lista lista = new Lista(nome);
             boolean sucesso = listaDAO.inserirLista(lista);
             if (sucesso) {
@@ -60,23 +53,23 @@ public class Main {
         boolean sucesso = contatoDAO.inserirContato(contato);
         if (sucesso) {
             contato.cadastroSucesso();
-
+            int contatoID = contatoDAO.getUltimoIDInserido(); // Obter o ID gerado do novo contato
+            System.out.println("Deseja cadastrar um endereço para o contato? \n 1-SIM \n 2-NÃO");
+            int op = scanner.nextInt();
+            switch (op) {
+                case 1:
+                    inputEndereco(contatoID);
+                    break;
+                case 2:
+                    break;
+                default:
+                    System.out.println("Opção inválida");
+                    break;
+            }
         } else {
             contato.cadastroErro();
         }
-        System.out.println("Deseja cadastrar um endereço para o contato? \n 1-SIM \n 2-NÃO");
 
-        int op = scanner.nextInt();
-        switch (op) {
-            case 1:
-                inputEndereco(4);
-                break;
-            case 2:
-                break;
-            default:
-                System.out.println("Opção inválida");
-                break;
-        }
     }
 
     private static void inputReuniao() {
