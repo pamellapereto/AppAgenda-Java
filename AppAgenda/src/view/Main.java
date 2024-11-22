@@ -14,22 +14,37 @@ import model.EnderecoDAO;
 public class Main {
     public static void main(String[] args) {
         //inputLista();
-        inputContato();
         //inputReuniao();
+        inputContato();
+        int contatoID = contatoDAO.getUltimoIDInserido();
+        System.out.println("Escolha uma opção: \n 1-ADICIONAR ENDEREÇO" +
+                "\n 2-RETORNAR AO MENU");
+        int op = Integer.parseInt(scanner.nextLine());
+        //int op = scanner.nextInt();
+        switch (op) {
+            case 1:
+                inputEndereco(contatoID);
+                break;
+            case 2:
+                //Código para retornar ao menu
+                break;
+            default:
+                System.out.println("Opção inválida");
+                break;
+        }
     }
 
     private static ListaDAO listaDAO = new ListaDAO();
     private static ContatoDAO contatoDAO = new ContatoDAO();
     private static ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
     private static EnderecoDAO enderecoDAO = new EnderecoDAO();
-
     private static Scanner scanner = new Scanner(System.in);
 
     private static void inputLista() {
         System.out.println("-----NOVA LISTA-----");
         System.out.println("Nome: ");
         String nome = scanner.nextLine().trim();
-        //Validar o campo para verificar se ele está vazio
+        //Validar o campo para verificar se ele está vazio.
         if (nome.isEmpty()) {
             System.out.println("Campo nome obrigatório");
         } else {
@@ -53,23 +68,9 @@ public class Main {
         boolean sucesso = contatoDAO.inserirContato(contato);
         if (sucesso) {
             contato.cadastroSucesso();
-            int contatoID = contatoDAO.getUltimoIDInserido(); // Obter o ID gerado do novo contato
-            System.out.println("Deseja cadastrar um endereço para o contato? \n 1-SIM \n 2-NÃO");
-            int op = scanner.nextInt();
-            switch (op) {
-                case 1:
-                    inputEndereco(contatoID);
-                    break;
-                case 2:
-                    break;
-                default:
-                    System.out.println("Opção inválida");
-                    break;
-            }
         } else {
             contato.cadastroErro();
         }
-
     }
 
     private static void inputReuniao() {
@@ -89,7 +90,6 @@ public class Main {
         }
     }
 
-
     private static void inputEndereco(int idfk) {
         System.out.println("----- NOVO ENDEREÇO -----");
         System.out.println("Rua: ");
@@ -102,7 +102,6 @@ public class Main {
         String estado = scanner.nextLine();
         System.out.println("CEP: ");
         String cep = scanner.nextLine();
-
         Endereco endereco = new Endereco(rua, numero, cidade, estado, cep, idfk);
         boolean sucesso = enderecoDAO.inserirEndereco(endereco);
         if (sucesso) {
