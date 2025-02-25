@@ -16,9 +16,9 @@ public class EnderecoDAO {
             //Preparar a execução da query SQL
             PreparedStatement novoEndereco = conexao.prepareStatement("INSERT INTO endereco " +
                     "(rua, numero, cidade, estado, cep, idfk) VALUES (?, ?, ?, ?, ?, ?);");
-            novoEndereco.setString(1, endereco.getRua());
+            novoEndereco.setString(1, endereco.getCidade());
             novoEndereco.setString(2, endereco.getNumero());
-            novoEndereco.setString(3, endereco.getCidade());
+            novoEndereco.setString(3, endereco.getRua());
             novoEndereco.setString(4, endereco.getEstado());
             novoEndereco.setString(5, endereco.getCep());
             novoEndereco.setInt(6, endereco.getIdfk());

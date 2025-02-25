@@ -13,26 +13,61 @@ import model.EnderecoDAO;
 
 public class Main {
     public static void main(String[] args) {
-        //inputLista();
-        //inputReuniao();
-        inputContato();
-        int contatoID = contatoDAO.getUltimoIDInserido();
-        System.out.println("Escolha uma opção: \n 1-ADICIONAR ENDEREÇO" +
-                "\n 2-RETORNAR AO MENU");
-        int op = Integer.parseInt(scanner.nextLine());
-        //int op = scanner.nextInt();
-        switch (op) {
-            case 1:
-                inputEndereco(contatoID);
-                break;
-            case 2:
-                //Código para retornar ao menu
-                break;
-            default:
-                System.out.println("Opção inválida");
-                break;
+        int loopMenuPrincipal = -1;
+        while (loopMenuPrincipal != 0) {
+            //Menu principal
+            System.out.println("Agenda de contato \uD83D\uDCD3");
+            System.out.println("Escolha uma das opções: \n" +
+                    "1. Listas" +
+                    "2. Contatos" +
+                    "3. Reuniões agendadas");
+
+            int opMenuP = Integer.parseInt(scanner.nextLine());
+
+            switch (opMenuP) {
+                case 1:
+                    inputLista();
+
+
+                    //
+                    System.out.println("Deseja atualizar a lista?");
+                    int id = Integer.parseInt(scanner.nextLine());
+                    updateLista(id);
+                    //
+
+
+                    //loopMenuPrincipal = 0;
+                    break;
+                case 2:
+                        inputContato();
+                        int contatoID = contatoDAO.getUltimoIDInserido();
+                        System.out.println("Escolha uma opção: \n 1-ADICIONAR ENDEREÇO" +
+                                "\n 2-RETORNAR AO MENU PRINCIPAL");
+                        int op = Integer.parseInt(scanner.nextLine());
+                        //int op = scanner.nextInt();
+                        switch (op) {
+                            case 1:
+                                inputEndereco(contatoID);
+                                break;
+                            case 2:
+                                loopMenuPrincipal = -1;
+                                break;
+                            default:
+                                System.out.println("Opção inválida");
+                                break;
+                        }
+                        break;
+                case 3:
+                    inputReuniao();
+                    loopMenuPrincipal = 0;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
         }
     }
+
 
     private static ListaDAO listaDAO = new ListaDAO();
     private static ContatoDAO contatoDAO = new ContatoDAO();
@@ -43,11 +78,15 @@ public class Main {
     private static void inputLista() {
         System.out.println("-----NOVA LISTA-----");
         System.out.println("Nome: ");
-        String nome = scanner.nextLine().trim();
+
+        String nome = scanner.nextLine();
+
+
         //Validar o campo para verificar se ele está vazio.
         if (nome.isEmpty()) {
             System.out.println("Campo nome obrigatório");
-        } else {
+        }
+        else {
             Lista lista = new Lista(nome);
             boolean sucesso = listaDAO.inserirLista(lista);
             if (sucesso) {
@@ -55,8 +94,28 @@ public class Main {
             } else {
                 lista.cadastroErro();
             }
+
         }
     }
+
+    private static void updateLista(int id) {
+        System.out.println("-----ATUALIZAR LISTA-----");
+        System.out.println("Nome: ");
+        String nome = scanner.nextLine();
+        if (nome.isEmpty()) {
+            System.out.println("Campo obrigatório");
+        }
+        else {
+            lista.setNome(nome);
+            boolean sucesso = listaDAO.atualizarLista(lista);
+            if (sucesso) {
+                lista.cadastroSucesso();
+            } else {
+                lista.cadastroErro();
+            }
+        }
+    }
+
 
     private static void inputContato() {
         System.out.println("----- NOVO CONTATO -----");

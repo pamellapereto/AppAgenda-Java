@@ -1,21 +1,30 @@
 package controller;
-
 public class Lista {
+    //DECLARACAO DE ID
+    private int id;
     private String nome;
 
     public Lista(String nome) {
         this.nome = nome;
+        this.id = id;
     }
 
-    //Getters
     public String getNome() {
         return nome;
     }
 
-    //Setters
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    //GETTER AND SETTER DE ID
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public void cadastroSucesso() {
         System.out.print("Lista cadastrada com sucesso!");
