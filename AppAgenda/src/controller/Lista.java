@@ -25,7 +25,6 @@ public class Lista {
         this.id = id;
     }
 
-
     public void cadastroSucesso() {
         System.out.print("Lista cadastrada com sucesso!");
     }

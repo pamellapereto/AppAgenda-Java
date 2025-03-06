@@ -32,7 +32,6 @@ public class Main {
                     //
                     System.out.println("Deseja atualizar a lista?");
                     int id = Integer.parseInt(scanner.nextLine());
-                    updateLista(id);
                     //
 
 
@@ -78,9 +77,7 @@ public class Main {
     private static void inputLista() {
         System.out.println("-----NOVA LISTA-----");
         System.out.println("Nome: ");
-
         String nome = scanner.nextLine();
-
 
         //Validar o campo para verificar se ele está vazio.
         if (nome.isEmpty()) {
@@ -94,27 +91,9 @@ public class Main {
             } else {
                 lista.cadastroErro();
             }
-
         }
     }
 
-    private static void updateLista(int id) {
-        System.out.println("-----ATUALIZAR LISTA-----");
-        System.out.println("Nome: ");
-        String nome = scanner.nextLine();
-        if (nome.isEmpty()) {
-            System.out.println("Campo obrigatório");
-        }
-        else {
-            lista.setNome(nome);
-            boolean sucesso = listaDAO.atualizarLista(lista);
-            if (sucesso) {
-                lista.cadastroSucesso();
-            } else {
-                lista.cadastroErro();
-            }
-        }
-    }
 
 
     private static void inputContato() {
